@@ -23,7 +23,7 @@ public class AdminUsersController {
         return "users";
     }
 
-    @GetMapping("/admin/users/add")
+    @GetMapping("/admin/user/add")
     public String addUser(@ModelAttribute("user") User user) {
         return "addUser";
     }
@@ -40,19 +40,31 @@ public class AdminUsersController {
         return "show";
     }
 
-    @GetMapping("/admin/users/{id}/update")
+    @GetMapping("/admin/user/{id}/update")
     public String getUpdateUserForm(ModelMap model, @PathVariable("id") long id) {
         model.addAttribute("user", this.userDao.getUser(id));
         return "updateUser";
     }
 
-    @PatchMapping("/admin/users/{id}")
+    @PatchMapping("/admin/user/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
         this.userDao.editUser(user, id);
         return "show";
     }
 
-    @DeleteMapping("/admin/users/{id}/delete")
+    @GetMapping("/admin/user/{id}/updatepassword")
+    public String getUpdatePasswordForm(ModelMap model, @PathVariable("id") long id) {
+        model.addAttribute("user", this.userDao.getUser(id));
+        return "updatePassword";
+    }
+
+    @PatchMapping("/admin/user/{id}/updatepassword")
+    public String updatePassword(@ModelAttribute("user") User user, @PathVariable("id") long id) {
+        this.userDao.editPassword(user, id);
+        return "successUpdPass";
+    }
+
+    @DeleteMapping("/admin/user/{id}/delete")
     public String deleteUser(@PathVariable("id") long id) {
         this.userDao.deleteUser(id);
         return "redirect:/admin/users";

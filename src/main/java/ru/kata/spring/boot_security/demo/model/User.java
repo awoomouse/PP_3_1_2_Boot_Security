@@ -11,13 +11,19 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column
     private String username;
+    @Column
     private String password;
+    @Column
     private String firstName;
+    @Column
     private String lastName;
+    @Column
     private byte age;
+    @Column
     private String email;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -33,9 +39,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password,
-                String firstName, String lastName,
-                byte age, String email) {
+    public User(String username, String password, String firstName, String lastName, byte age, String email) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -135,22 +139,28 @@ public class User implements UserDetails {
         this.roleList = roleList;
     }
 
+    @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        } else if (o != null && this.getClass() == o.getClass()) {
-            User user = (User) o;
-            return this.id == user.id && this.age == user.age && Objects.equals(this.firstName, user.firstName) && Objects.equals(this.lastName, user.lastName) && Objects.equals(this.email, user.email);
-        } else {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && age == user.age && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(roleList, user.roleList);
     }
 
     public int hashCode() {
         return Objects.hash(this.id);
     }
 
+    @Override
     public String toString() {
-        return "User{id=" + this.id + ", firstName='" + this.firstName + "', lastName='" + this.lastName + "', age=" + this.age + ", email='" + this.email + "'}";
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

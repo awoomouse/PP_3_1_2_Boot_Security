@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Password updated! congratz!</title>
+</head>
+<body>
+<h1>Password updated! congratz!</h1>
+
+<br>
+
+<form th:method="GET" th:action="@{'/admin/user/'+${user.getId()}}">
+    <input type="submit" value="Back to user">
+</form>
+</body>
+</html>

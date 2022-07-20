@@ -14,13 +14,19 @@
 
 <br>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-<form th:method="GET" th:action="@{'/admin/users/' + ${user.getId()} + '/update'}">
+<form th:method="GET" th:action="@{'/admin/user/' + ${user.getId()} + '/update'}">
     <input type="submit" value="Edit user"/>
 </form>
 
 <br>
 
-<form th:method="DELETE" th:action="@{'/admin/users/'+ ${user.getId()} + '/delete'}">
+<form th:method="GET" th:action="@{'/admin/user/' + ${user.getId()} + '/updatepassword'}">
+    <input type="submit" value="Update password">
+</form>
+
+<br>
+
+<form th:method="DELETE" th:action="@{'/admin/user/'+ ${user.getId()} + '/delete'}">
     <input type="submit" value="Delete user"/>
 </form>
 

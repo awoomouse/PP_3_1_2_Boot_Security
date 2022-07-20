@@ -1,37 +1,31 @@
 package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kata.spring.boot_security.demo.service.UserDetailsImpl;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
-    private UserDetailsImpl userDetails;
+    private final UserDetailsImpl userDetails;
+    private final PasswordEncoderTest passwordEncoderTest;
 
     @Autowired
-    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsImpl userDetails, PasswordEncoderTest passwordEncoderTest) {
         this.successUserHandler = successUserHandler;
-    }
-    @Autowired
-    public void setUserDetails(UserDetailsImpl userDetails) {
         this.userDetails = userDetails;
+        this.passwordEncoderTest = passwordEncoderTest;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
+                .authorizeRequests().antMatchers("/addAdmin").permitAll()
                 .antMatchers("/user")
                 .hasRole("USER")
                 .antMatchers("/admin/**")
@@ -47,7 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetails).passwordEncoder(NoOpPasswordEncoder.getInstance());
+        auth.userDetailsService(userDetails).passwordEncoder(passwordEncoderTest.getPasswordEncoder());
     }
+
 
 }
