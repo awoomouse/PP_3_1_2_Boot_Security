@@ -52,18 +52,6 @@ public class AdminUsersController {
         return "show";
     }
 
-    @GetMapping("/admin/user/{id}/updatepassword")
-    public String getUpdatePasswordForm(ModelMap model, @PathVariable("id") long id) {
-        model.addAttribute("user", this.userDao.getUser(id));
-        return "updatePassword";
-    }
-
-    @PatchMapping("/admin/user/{id}/updatepassword")
-    public String updatePassword(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-        this.userDao.editPassword(user, id);
-        return "successUpdPass";
-    }
-
     @DeleteMapping("/admin/user/{id}/delete")
     public String deleteUser(@PathVariable("id") long id) {
         this.userDao.deleteUser(id);

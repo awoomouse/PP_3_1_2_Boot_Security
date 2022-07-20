@@ -20,12 +20,6 @@
 
 <br>
 
-<form th:method="GET" th:action="@{'/admin/user/' + ${user.getId()} + '/updatepassword'}">
-    <input type="submit" value="Update password">
-</form>
-
-<br>
-
 <form th:method="DELETE" th:action="@{'/admin/user/'+ ${user.getId()} + '/delete'}">
     <input type="submit" value="Delete user"/>
 </form>

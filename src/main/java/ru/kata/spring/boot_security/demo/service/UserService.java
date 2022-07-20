@@ -18,7 +18,5 @@ public interface UserService {
 
     void editUser(User user, long id);
 
-    public void editPassword(User user, long id);
-
     List<User> getAllUsers();
 }

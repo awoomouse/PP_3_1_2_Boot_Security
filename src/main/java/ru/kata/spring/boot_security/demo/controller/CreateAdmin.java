@@ -8,15 +8,15 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-//класс для теста
+
 @Controller
-public class CreateTestAdmin {
+public class CreateAdmin {
 
     private final UserService userService;
     private final RoleRepository roleRepository;
 
     @Autowired
-    public CreateTestAdmin(UserService userService, RoleRepository roleRepository) {
+    public CreateAdmin(UserService userService, RoleRepository roleRepository) {
         this.userService = userService;
         this.roleRepository = roleRepository;
     }

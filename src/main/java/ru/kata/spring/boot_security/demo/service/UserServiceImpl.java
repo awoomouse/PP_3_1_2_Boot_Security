@@ -3,10 +3,9 @@ package ru.kata.spring.boot_security.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.configs.PasswordEncoderTest;
+import ru.kata.spring.boot_security.demo.configs.MyPasswordEncoder;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import java.util.List;
 
@@ -14,14 +13,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoderTest passwordEncoderTest;
-    private final RoleRepository roleRepository;
+    private final MyPasswordEncoder myPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoderTest passwordEncoderTest) {
+    public UserServiceImpl(UserRepository userRepository, MyPasswordEncoder myPasswordEncoder) {
         this.userRepository = userRepository;
-        this.passwordEncoderTest = passwordEncoderTest;
-        this.roleRepository = roleRepository;
+        this.myPasswordEncoder = myPasswordEncoder;
     }
 
     @Transactional
@@ -31,7 +28,7 @@ public class UserServiceImpl implements UserService {
             return findUser;
         }
         user.addRole(new Role(2L, "ROLE_USER"));
-        user.setPassword(passwordEncoderTest.getPasswordEncoder().encode(user.getPassword()));
+        user.setPassword(myPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
         return user;
     }
@@ -63,12 +60,7 @@ public class UserServiceImpl implements UserService {
         editUser.setAge(user.getAge());
         editUser.setEmail(user.getEmail());
         editUser.setUsername(user.getUsername());
-    }
-
-    @Transactional
-    public void editPassword(User user, long id) {
-        User editUser = this.getUser(id);
-        editUser.setPassword(passwordEncoderTest.getPasswordEncoder().encode(user.getPassword()));
+        editUser.setPassword(myPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
     }
 
     @SuppressWarnings("unchecked")

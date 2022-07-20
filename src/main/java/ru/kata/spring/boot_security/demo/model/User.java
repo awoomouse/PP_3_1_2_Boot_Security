@@ -29,13 +29,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roleList;
 
-    public void addRole(Role role) {
-        if (this.roleList == null) {
-            this.roleList = new ArrayList<>();
-        }
-        this.roleList.add(role);
-    }
-
     public User() {
     }
 
@@ -78,13 +71,13 @@ public class User implements UserDetails {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setUsername(String username) {
@@ -137,6 +130,13 @@ public class User implements UserDetails {
 
     public void setRoleSet(List<Role> roleList) {
         this.roleList = roleList;
+    }
+
+    public void addRole(Role role) {
+        if (this.roleList == null) {
+            this.roleList = new ArrayList<>();
+        }
+        this.roleList.add(role);
     }
 
     @Override
