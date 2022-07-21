@@ -6,7 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.configs.MyPasswordEncoder;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
@@ -14,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final MyPasswordEncoder myPasswordEncoder;
+    @PersistenceContext
+    private EntityManager em;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, MyPasswordEncoder myPasswordEncoder) {
@@ -36,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUserRole(User user, Role role) {
         user.addRole(role);
-//        userRepository.save(user);
+        userRepository.save(user);
     }
 
     public User getUser(long id) {
