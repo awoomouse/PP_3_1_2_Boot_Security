@@ -28,8 +28,8 @@ public class CreateAdmin {
         roleRepository.save(roleAdmin);
         roleRepository.save(roleUser);
         User user = userService.addUser(new User("admin", "admin", "testname",
-                                            "testlastname", (byte) 15, "email@email.com"));
-        userService.updateRole(user, roleAdmin);
+                "testlastname", (byte) 15, "email@email.com"));
+        userService.updateUserRole(user, roleAdmin);
         return "redirect:/login";
     }
 }

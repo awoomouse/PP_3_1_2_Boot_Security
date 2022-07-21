@@ -34,8 +34,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void updateRole(User user, Role role) {
+    public void updateUserRole(User user, Role role) {
         user.addRole(role);
+//        userRepository.save(user);
     }
 
     public User getUser(long id) {

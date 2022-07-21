@@ -136,7 +136,9 @@ public class User implements UserDetails {
         if (this.roleList == null) {
             this.roleList = new ArrayList<>();
         }
-        this.roleList.add(role);
+        if (!roleList.contains(role)) {
+            this.roleList.add(role);
+        }
     }
 
     @Override

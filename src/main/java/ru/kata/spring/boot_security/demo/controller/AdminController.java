@@ -9,16 +9,16 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 
 @Controller
-public class AdminUsersController {
+public class AdminController {
     private final UserService userDao;
 
     @Autowired
-    public AdminUsersController(UserService userDao) {
+    public AdminController(UserService userDao) {
         this.userDao = userDao;
     }
 
     @GetMapping("/admin/users")
-    public String showUsers(ModelMap model) {
+    public String getUsers(ModelMap model) {
         model.addAttribute("usersList", this.userDao.getAllUsers());
         return "users";
     }
@@ -35,7 +35,7 @@ public class AdminUsersController {
     }
 
     @GetMapping("/admin/user/{id}")
-    public String showUserForAdmin(@PathVariable("id") long id, ModelMap model) {
+    public String getUserForAdmin(@PathVariable("id") long id, ModelMap model) {
         model.addAttribute("user", this.userDao.getUser(id));
         return "show";
     }

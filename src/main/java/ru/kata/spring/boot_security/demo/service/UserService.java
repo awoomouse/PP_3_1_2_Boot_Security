@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserService {
     User addUser(User user);
 
-    public void updateRole(User user, Role role);
+    public void updateUserRole(User user, Role role);
 
     User getUser(long id);
 

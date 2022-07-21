@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String showUser(Principal principal, ModelMap model) {
+    public String getUser(Principal principal, ModelMap model) {
         model.addAttribute("user", userDao.getUserByName(principal.getName()));
         return "show";
     }
