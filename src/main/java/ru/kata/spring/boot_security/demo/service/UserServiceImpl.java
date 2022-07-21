@@ -17,8 +17,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final MyPasswordEncoder myPasswordEncoder;
-    @PersistenceContext
-    private EntityManager em;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, MyPasswordEncoder myPasswordEncoder) {
