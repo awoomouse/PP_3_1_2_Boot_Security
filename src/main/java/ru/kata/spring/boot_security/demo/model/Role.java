@@ -11,10 +11,11 @@ import java.util.Objects;
 public class Role implements GrantedAuthority {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String role;
+    private String roleName;
 
     @Transient
     @ManyToMany(mappedBy = "roleList")
@@ -22,9 +23,8 @@ public class Role implements GrantedAuthority {
 
     public Role() {}
 
-    public Role(Long id, String role) {
-        this.id = id;
-        this.role = role;
+    public Role(String roleName) {
+        this.roleName = roleName;
     }
 
     public Long getId() {
@@ -35,12 +35,12 @@ public class Role implements GrantedAuthority {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String role) {
+        this.roleName = role;
     }
 
     public List<User> getUsers() {
@@ -53,7 +53,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return getRole();
+        return getRoleName();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Role implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role1 = (Role) o;
-        return Objects.equals(id, role1.id) && Objects.equals(role, role1.role);
+        return Objects.equals(id, role1.id) && Objects.equals(roleName, role1.roleName);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Role implements GrantedAuthority {
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", role='" + role + '\'' +
+                ", role='" + roleName + '\'' +
                 '}';
     }
 }

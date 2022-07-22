@@ -8,6 +8,9 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 class SpringBootSecurityDemoApplicationTests {
 
@@ -26,12 +29,14 @@ class SpringBootSecurityDemoApplicationTests {
 
 	@Test
 	public void createAdmin() {
-		Role roleAdmin = new Role(1L, "ROLE_ADMIN");
-		Role roleUser = new Role(2L, "ROLE_USER");
+		Role roleAdmin = new Role( "ROLE_ADMIN");
+		Role roleUser = new Role( "ROLE_USER");
+		List<Role> roleList = new ArrayList<>();
+		roleList.add(roleAdmin);
+		roleList.add(roleUser);
 		this.roleRepository.save(roleAdmin);
 		this.roleRepository.save(roleUser);
 		User user = this.userService.addUser(new User("admin", "admin", "testname",
-				"testlastname", (byte) 15, "email@email.com"));
-		this.userService.updateUserRole(user, roleAdmin);
+				"testlastname", (byte) 15, "email@email.com", roleList));
 	}
 }

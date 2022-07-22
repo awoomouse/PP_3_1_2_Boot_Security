@@ -36,6 +36,13 @@
     <input type="text" th:field="*{password}" id="pass">
 
     <br>
+    <br>
+    <label for="roles">Choose roles: </label>
+    <select name="rolesList" id="roles" size="2" multiple>
+        <option th:value="ROLE_ADMIN" th:text="ADMIN"></option>
+        <option th:value="ROLE_USER" th:text="USER"></option>
+    </select>
+    <br><br>
 
     <input type="submit" value="Update user"/>
 </form>
