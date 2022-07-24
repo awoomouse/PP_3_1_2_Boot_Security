@@ -9,7 +9,9 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 class SpringBootSecurityDemoApplicationTests {
@@ -31,12 +33,12 @@ class SpringBootSecurityDemoApplicationTests {
 	public void createAdmin() {
 		Role roleAdmin = new Role( "ROLE_ADMIN");
 		Role roleUser = new Role( "ROLE_USER");
-		List<Role> roleList = new ArrayList<>();
-		roleList.add(roleAdmin);
-		roleList.add(roleUser);
+		Set<Role> roles = new HashSet<>();
+		roles.add(roleAdmin);
+		roles.add(roleUser);
 		this.roleRepository.save(roleAdmin);
 		this.roleRepository.save(roleUser);
 		User user = this.userService.addUser(new User("admin", "admin", "testname",
-				"testlastname", (byte) 15, "email@email.com", roleList));
+				"testlastname", (byte) 15, "email@email.com", roles));
 	}
 }

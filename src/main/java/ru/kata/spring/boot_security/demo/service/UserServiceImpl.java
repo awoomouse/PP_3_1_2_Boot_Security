@@ -19,15 +19,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final MyPasswordEncoder myPasswordEncoder;
-    private final RoleRepository roleRepository;
-    private final RoleService roleService;
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, MyPasswordEncoder myPasswordEncoder, RoleRepository roleRepository, RoleService roleService) {
+    public UserServiceImpl(UserRepository userRepository, MyPasswordEncoder myPasswordEncoder) {
         this.userRepository = userRepository;
         this.myPasswordEncoder = myPasswordEncoder;
-        this.roleRepository = roleRepository;
-        this.roleService = roleService;
+
     }
 
     @Transactional
@@ -39,12 +37,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(myPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
         return user;
-    }
-
-    @Transactional
-    public void updateUserRole(User user, String[] roles) {
-        user.setRoleSet(Arrays.stream(roles).map(roleService::getRoleByRoleName).collect(Collectors.toList()));
-        userRepository.save(user);
     }
 
     public User getUser(long id) {
@@ -62,15 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public User editUser(User user, long id) {
-        User editUser = this.getUser(id);
-        editUser.setFirstName(user.getFirstName());
-        editUser.setLastName(user.getLastName());
-        editUser.setAge(user.getAge());
-        editUser.setEmail(user.getEmail());
-        editUser.setUsername(user.getUsername());
-        editUser.setPassword(myPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
-        return editUser;
+    public void editUser(User user, long id) {
+        if (userRepository.getById(id) != null) {
+            user.setPassword(myPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
+            userRepository.save(user);
+        }
     }
 
     @SuppressWarnings("unchecked")

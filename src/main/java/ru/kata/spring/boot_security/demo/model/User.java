@@ -30,19 +30,19 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roleList;
+    private Set<Role> roles;
 
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, byte age, String email, List<Role> roleList) {
+    public User(String username, String password, String firstName, String lastName, byte age, String email, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
-        this.roleList = roleList;
+        this.roles = roles;
     }
 
     @Override
@@ -128,20 +128,20 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public List<Role> getRoles() {
-        return roleList;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleSet(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setRoles(Set<Role> roleList) {
+        this.roles = roleList;
     }
 
     public void addRole(Role role) {
-        if (this.roleList == null) {
-            this.roleList = new ArrayList<>();
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
         }
-        if (!roleList.contains(role)) {
-            this.roleList.add(role);
+        if (!roles.contains(role)) {
+            this.roles.add(role);
         }
     }
 
@@ -150,7 +150,7 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && age == user.age && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(roleList, user.roleList);
+        return id == user.id && age == user.age && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
     }
 
     public int hashCode() {
@@ -167,6 +167,7 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
+                ", roleList=" + getRoles() +
                 '}';
     }
 }

@@ -8,15 +8,13 @@ import java.util.List;
 public interface UserService {
     User addUser(User user);
 
-    public void updateUserRole(User user, String[] roles);
-
     User getUser(long id);
 
     public User getUserByName(String username);
 
     void deleteUser(long id);
 
-    User editUser(User user, long id);
+    void editUser(User user, long id);
 
     List<User> getAllUsers();
 }

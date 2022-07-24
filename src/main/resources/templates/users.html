@@ -14,6 +14,7 @@
                 <th>LastName</th>
                 <th>Age</th>
                 <th>Email</th>
+                <th>Roles</th>
                 <th>Link user</th>
             </tr>
             <tr th:each="user : ${usersList}">
@@ -22,6 +23,9 @@
                 <td th:utext="${user.lastName}">lastName</td>
                 <td th:utext="${user.age}">age</td>
                 <td th:utext="${user.email}">email</td>
+                <td>
+                <th:block th:each="role:${user.getRoles()}" th:text="${role.roleName.replaceAll('ROLE_', '')+' '}">roles</th:block>
+                </td>
                 <td th:href="@{'/user/'+${user.id}}">
                 <form method="get" th:action="@{'/admin/user/'+${user.id}}">
                     <input type="submit" value="to User"/>

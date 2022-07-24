@@ -37,10 +37,14 @@
 
     <br>
     <br>
-    <label for="roles">Choose roles: </label>
-    <select name="rolesList" id="roles" size="2" multiple>
-        <option th:value="ROLE_ADMIN" th:text="ADMIN"></option>
-        <option th:value="ROLE_USER" th:text="USER"></option>
+    <label for="roles"><b>Roles</b></label>
+    <select multiple="multiple" id="roles"
+            name="roles" size="2" required>
+        <option th:each="role:${roleList}"
+                th:value="${role.id}"
+                th:selected="${user.getRoles().contains(role)}">
+            <th:block th:text="${role.roleName}"></th:block>
+        </option>
     </select>
     <br><br>
 
