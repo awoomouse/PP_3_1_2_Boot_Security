@@ -42,43 +42,26 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String getUsers(Model model) {
+    public String getUsers(Principal principal, Model model) {
+        model.addAttribute(this.userDao.getUserByName(principal.getName()));
         model.addAttribute("usersList", this.userDao.getAllUsers());
-        return "users";
-    }
-
-    @GetMapping("/admin/user/add")
-    public String addUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("roleList", this.roleService.getAllRoles());
-        return "addUser";
+        return "admin";
     }
 
-    @PostMapping("/admin/users/add")
+    @PostMapping("/admin/new")
     public String createUser(@ModelAttribute("user") User user) {
         this.userDao.addUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/user/{id}")
-    public String getUserForAdmin(@PathVariable("id") long id, ModelMap model) {
-        model.addAttribute("user", this.userDao.getUser(id));
-        return "show";
+    @PutMapping("/admin/update")
+    public String updateUser(@ModelAttribute("user") User user/*, @PathVariable("id") long id*/) {
+        this.userDao.editUser(user);
+        return "redirect:/admin";
     }
 
-    @GetMapping("/admin/user/{id}/update")
-    public String getUpdateUserForm(ModelMap model, @PathVariable("id") long id) {
-        model.addAttribute("user", this.userDao.getUser(id));
-        model.addAttribute("roleList", this.roleService.getAllRoles());
-        return "updateUser";
-    }
-
-    @PatchMapping("/admin/user/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-        this.userDao.editUser(user, id);
-        return "show";
-    }
-
-    @DeleteMapping("/admin/user/{id}/delete")
+    @DeleteMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         this.userDao.deleteUser(id);
         return "redirect:/admin";

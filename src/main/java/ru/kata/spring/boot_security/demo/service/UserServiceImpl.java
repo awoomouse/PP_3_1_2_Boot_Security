@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void editUser(User user, long id) {
-        if (userRepository.getById(id) != null) {
+    public void editUser(User user) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
             user.setPassword(myPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
             userRepository.save(user);
         }
