@@ -81,7 +81,7 @@
                                             <td th:utext="${user.username}">username</td>
                                             <td>
                                                 <th:block th:each="role : ${user.getRoles()}"
-                                                          th:text="${role.roleName.replaceFirst('ROLE_', '')}">
+                                                          th:text="${role.roleName.replaceFirst('ROLE_', '')+' '}">
                                                 </th:block>
                                             </td>
                                             <td>

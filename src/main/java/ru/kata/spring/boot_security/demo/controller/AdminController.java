@@ -56,7 +56,7 @@ public class AdminController {
     }
 
     @PutMapping("/admin/update")
-    public String updateUser(@ModelAttribute("user") User user/*, @PathVariable("id") long id*/) {
+    public String updateUser(@ModelAttribute("user") User user) {
         this.userDao.editUser(user);
         return "redirect:/admin";
     }
