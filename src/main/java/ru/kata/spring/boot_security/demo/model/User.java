@@ -25,17 +25,17 @@ public class User implements UserDetails {
     private byte age;
     @Column
     private String email;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.MERGE)
     @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private List<Role> roles;
 
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, byte age, String email, Set<Role> roles) {
+    public User(String username, String password, String firstName, String lastName, byte age, String email, List<Role> roles) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -128,17 +128,17 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roleList) {
+    public void setRoles(List<Role> roleList) {
         this.roles = roleList;
     }
 
     public void addRole(Role role) {
         if (this.roles == null) {
-            this.roles = new HashSet<>();
+            this.roles = new ArrayList<>();
         }
         if (!roles.contains(role)) {
             this.roles.add(role);

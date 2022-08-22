@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUser(long id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id).get();
     }
 
     @SuppressWarnings("unchecked")
@@ -54,11 +54,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public void editUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+    public User editUser(User user) {
+        if (userRepository.findById(user.getId()) != null) {
             user.setPassword(myPasswordEncoder.getPasswordEncoder().encode(user.getPassword()));
-            userRepository.save(user);
+            return userRepository.save(user);
         }
+        return user;
     }
 
     @SuppressWarnings("unchecked")

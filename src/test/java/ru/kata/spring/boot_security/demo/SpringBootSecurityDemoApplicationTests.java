@@ -33,7 +33,7 @@ class SpringBootSecurityDemoApplicationTests {
 	public void createAdmin() {
 		Role roleAdmin = new Role( "ROLE_ADMIN");
 		Role roleUser = new Role( "ROLE_USER");
-		Set<Role> roles = new HashSet<>();
+		List<Role> roles = new ArrayList<>();
 		roles.add(roleAdmin);
 		roles.add(roleUser);
 		this.roleRepository.save(roleAdmin);
