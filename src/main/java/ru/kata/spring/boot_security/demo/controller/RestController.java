@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.security.Principal;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
@@ -23,14 +25,12 @@ public class RestController {
 
     @GetMapping("/admin")
     public List<User> getUsers() {
-        List<User> userList = userDao.getAllUsers();
-        return userList;
+        return userDao.getAllUsers();
     }
 
-    @GetMapping("/user/{id}")
-    public User getUser(@PathVariable("id") long id) {
-        User user = userDao.getUser(id);
-        return user;
+    @GetMapping("/user")
+    public User getUser(Principal principal) {
+        return userDao.getUserByName(principal.getName());
     }
 
     @PostMapping("/admin")
