@@ -46,7 +46,7 @@ public class AdminController {
         model.addAttribute(this.userDao.getUserByName(principal.getName()));
         model.addAttribute("usersList", this.userDao.getAllUsers());
         model.addAttribute("roleList", this.roleService.getAllRoles());
-        return "admin";
+        return "adm";
     }
 
     @PostMapping("/admin/new")
